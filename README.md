@@ -20,14 +20,27 @@ Same design language, two variants:
 
 ![Icon set](docs/iconpack-contact-sheet.png)
 
+**Automatic day/night, verified live on Android 16** — the companion app flips the
+accent + wallpaper on a schedule (Quick Settings shown below: pink at night, cyan
+by day):
+
+| Night (accent #ff0080) | Day (accent #00b4c8) |
+|---|---|
+| ![Night QS](docs/demo-qs-night.jpg) | ![Day QS](docs/demo-qs-day.jpg) |
+
 ## What's in the box
 
 | Component | What it is | Auto day/night? |
 |-----------|-----------|-----------------|
-| **Wallpapers** | Light + dark, rendered for **both** foldable screens (near-square inner + 20:9 cover), crease- and hole-punch-aware | Manual / via Material You |
-| **Icon pack** (`dist/…apk`) | ~125 apps mapped to cohesive OneQode line icons on a glass tile, **+ monochrome themed icons** for Material You | Themed icons follow Material You |
-| **Accent lock** (`tools/oneqode-accent.sh`) | Pins the system Monet accent to the exact OneQode hex over ADB | — |
-| **Lawnchair guide** (`lawnchair/`) | How to apply the pack + recommended settings | — |
+| **OneQode Theme app** (`dist/oneqode-theme-release.apk`) | Companion app that switches the **accent** (cyan ↔ pink) **and wallpaper** (Light Glass ↔ Night Ride) on a **solar/fixed schedule** — the KDE-switcher equivalent. Native, no launcher. | ✅ **Automatic** |
+| **Wallpapers** | Light + dark, rendered for **both** foldable screens (near-square inner + 20:9 cover), crease- and hole-punch-aware | via the app |
+| **Icon pack** (`dist/oneqode-iconpack-release.apk`) | *Optional.* ~125 apps mapped to cohesive OneQode line icons + monochrome themed icons. Only needed if you want the **custom colored** icons (requires Lawnchair). | Themed icons follow Material You |
+| **ADB tools** (`tools/`) | One-shot accent/wallpaper helpers if you'd rather not install the app | — |
+
+> **Tested on Android 16 (API 36):** the companion app's day/night switching is
+> verified end-to-end on an emulator — accent live-retints the system UI
+> (pink ↔ cyan), wallpaper swaps, and the solar/fixed schedule fires correctly.
+> See `docs/` screenshots.
 
 ## Reality check: what's possible on GrapheneOS (read this first)
 
@@ -47,34 +60,66 @@ about the rest:
   (Substratum/RRO), rich lock-screen clock faces. GrapheneOS doesn't support root
   and these need system-partition or root access. See `docs/grapheneos-notes.md`.
 
-**Launcher:** the **stock GrapheneOS launcher cannot use icon packs** — install
-**Lawnchair** (FOSS) to apply OneQode. See `lawnchair/README.md`.
+**Day/night:** Android can't schedule an accent change on its own, so the
+**OneQode Theme app** does it (granted one permission via ADB; no root). Pair it
+with GrapheneOS's built-in **Dark theme schedule** for a fully synced day/night.
 
-## Install
+## Install — the native path (recommended)
 
-Four steps: get the pack, apply it in Lawnchair, set the wallpapers, lock the
-accent. Everything you need is below — no other page required.
+This is the clean, no-launcher path: install the app, grant it once, done. It
+switches accent + wallpaper automatically on a solar schedule.
 
-### A · Install the icon pack
-
-**Easiest — Obtainium (auto-updates):**
+### 1 · Install the OneQode Theme app
 
 [![Install with Obtainium](https://img.shields.io/badge/Install_with-Obtainium-ff0080?logo=android&logoColor=white)](https://apps.obtainium.imranr.dev/redirect.html?r=obtainium://add/https://github.com/matt-shearing/oneqode-graphene-theme)
 
-1. Install **[Obtainium](https://obtainium.imranr.dev)** on the phone.
-2. Tap the badge above **or** open Obtainium → **Add App** and paste:
-   `https://github.com/matt-shearing/oneqode-graphene-theme`
-3. Obtainium grabs the latest release and installs it. Allow “install unknown
-   apps” once. It tracks future releases automatically.
+- **Obtainium (auto-updates):** install [Obtainium](https://obtainium.imranr.dev),
+  tap the badge above (or **Add App** → paste the repo URL
+  `https://github.com/matt-shearing/oneqode-graphene-theme`). It lists both OneQode
+  APKs — pick **oneqode-theme**.
+- **Or direct:** [oneqode-theme-release.apk](https://github.com/matt-shearing/oneqode-graphene-theme/releases/latest/download/oneqode-theme-release.apk)
+  · **or ADB:** `adb install dist/oneqode-theme-release.apk`
 
-**Or manually:**
-- **Direct download** on the phone:
-  [oneqode-iconpack-release.apk](https://github.com/matt-shearing/oneqode-graphene-theme/releases/latest/download/oneqode-iconpack-release.apk)
-  → tap to install, **or**
-- **ADB** from a computer: `adb install dist/oneqode-iconpack-release.apk`
-  (enable *Settings → System → Developer options → Wireless/USB debugging* first).
+### 2 · Grant the accent permission (one time, no root)
 
-### B · Apply it in Lawnchair
+From a computer with the phone connected (enable *Developer options →
+Wireless/USB debugging* first):
+
+```bash
+adb shell pm grant com.oneqode.theme android.permission.WRITE_SECURE_SETTINGS
+```
+
+The app's home screen shows a green “✓ Accent control granted” banner once this is
+done. (Wallpaper switching works even without it; only the accent needs it.)
+
+### 3 · Configure & go
+
+Open **OneQode Theme**:
+- Pick **Solar** (enter your latitude/longitude) or **Fixed** (day/night times).
+- Choose what to switch: **Accent**, **Wallpaper**, or both.
+- Tap **Save & schedule**. Use **Apply Day/Night now** to preview, or the
+  **Quick Settings tile** to flip manually.
+
+### 4 · Sync the light/dark UI (optional but recommended)
+
+An app can't flip global dark mode without a privileged permission, so let
+GrapheneOS do it: **Settings → Display → Dark theme → Schedule → Sunset to
+sunrise**. Now the whole UI, accent, and wallpaper all move together day↔night.
+
+---
+
+## Optional: custom colored icon pack (needs Lawnchair)
+
+Everything above gives you the OneQode accent + wallpaper + (with themed icons on)
+a monochrome system-tinted icon look on the **stock launcher** — no launcher swap.
+Install the icon pack **only** if you specifically want the bespoke *colored*
+OneQode glyph icons, which require a launcher that supports icon packs.
+
+- Install: Obtainium → pick **oneqode-iconpack**, or
+  [direct APK](https://github.com/matt-shearing/oneqode-graphene-theme/releases/latest/download/oneqode-iconpack-release.apk),
+  or `adb install dist/oneqode-iconpack-release.apk`.
+
+### Apply it in Lawnchair
 
 The stock GrapheneOS launcher **cannot use icon packs**, so install **Lawnchair**
 from **https://lawnchair.app** (not the Play/F-Droid “v2” — that one's abandoned).
@@ -90,61 +135,50 @@ from **https://lawnchair.app** (not the Play/F-Droid “v2” — that one's aba
 > Nova / Action / Apex instead? Settings → Look & feel → **Icon theme → OneQode**.
 > More tuning tips in [`lawnchair/README.md`](lawnchair/README.md).
 
-### C · Set the wallpapers
+## Manual alternative (no app)
 
-Push them to the phone over ADB:
-
-```bash
-tools/apply-wallpapers.sh night        # or: day | both
-```
-
-Then set each from the wallpaper picker — the foldable's two screens have very
-different shapes, so set each from the matching physical state:
-
-- **Unfold** the phone → set the **inner** screen with `OneQode-<variant>-inner.png`.
-  Position the OneQode mark **above the vertical fold crease** (centre line).
-- **Fold** the phone → set the **cover** screen with `OneQode-<variant>-cover.png`.
-
-> No ADB? Copy the PNGs from `wallpapers/light-glass/` and `wallpapers/night-ride/`
-> onto the phone and pick them in the wallpaper app.
-
-### D · Lock the Material You accent (optional, no root)
-
-GrapheneOS's on-device picker only offers preset accents. To pin the exact OneQode
-colour, run over ADB:
+Prefer not to install the companion app? You can drive the same accent + wallpaper
+one-shot over ADB (no automatic switching):
 
 ```bash
-tools/oneqode-accent.sh night          # Night Ride  → #ff0080
-tools/oneqode-accent.sh day            # Light Glass → #00b4c8
-tools/oneqode-accent.sh reset          # back to wallpaper-derived colour
+tools/oneqode-accent.sh night      # accent → #ff0080  (day | reset also work)
+tools/apply-wallpapers.sh night    # push wallpapers, then pick in the picker
 ```
 
-### Day / night
+For the foldable, set each screen from the matching state: **unfold** → inner
+(`*-inner.png`, mark above the fold crease), **fold** → cover (`*-cover.png`).
 
-There's no automatic icon-pack switch, but because themed icons follow Material
-You, switching the **wallpaper + accent** flips the whole home screen between the
-two looks:
+## Building from source
 
-- **Day:** Light Glass wallpaper + `tools/oneqode-accent.sh day`
-- **Night:** Night Ride wallpaper + `tools/oneqode-accent.sh night`
-
-## Building the icon pack yourself
-
-A prebuilt, signed APK ships in `dist/`. To rebuild from source:
+Prebuilt, signed APKs ship in `dist/`. To rebuild (no Android Studio required):
 
 ```bash
 # one-time: fetch a minimal headless Android SDK into ~/.android-sdk-oneqode
 tools/bootstrap-sdk.sh
 
-# regenerate icons + mappings, then build & sign (aapt2 + javac + d8 + apksigner)
-python3 iconpack/tools/forge.py        # forges icons + monochrome vectors
-python3 iconpack/tools/appfilter.py    # generates appfilter / grayscale / drawable xml
+# companion app (aapt2 + javac + d8 + apksigner)
+companion/build-cli.sh                  # -> dist/oneqode-theme-release.apk
+
+# icon pack: regenerate art + mappings, then build & sign
+python3 iconpack/tools/forge.py         # forges icons + monochrome vectors
+python3 iconpack/tools/appfilter.py     # generates appfilter / grayscale / drawable xml
 iconpack/build-cli.sh                   # -> dist/oneqode-iconpack-release.apk
 ```
 
-No Android Studio required. (Android Studio users can instead open `iconpack/`
-as a Gradle project — `build.gradle` is provided. CI builds via
-`.github/workflows/build.yml`.)
+### Test it on an emulator (no phone needed)
+
+```bash
+tools/bootstrap-emulator.sh             # installs Android 16 image + creates AVD
+$ANDROID_SDK_ROOT/emulator/emulator -avd oneqode -no-window -gpu swiftshader_indirect &
+adb wait-for-device
+adb install dist/oneqode-theme-release.apk
+adb shell pm grant com.oneqode.theme android.permission.WRITE_SECURE_SETTINGS
+# then drive it: am start .../MainActivity, or am broadcast .../AlarmReceiver
+```
+
+This is how the day/night switching was verified on Android 16 (see `docs/`).
+Android Studio users can instead open `iconpack/` or `companion/` as Gradle
+projects; CI builds via `.github/workflows/build.yml`.
 
 > **Signing:** `build-cli.sh` auto-creates a dev keystore at
 > `iconpack/keystore/oneqode-release.jks` (password `oneqode`). **Rotate this for

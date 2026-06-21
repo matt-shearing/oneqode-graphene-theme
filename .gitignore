@@ -1,6 +1,7 @@
 # Android / build
 *.apk
 !dist/oneqode-iconpack-release.apk
+!dist/oneqode-theme-release.apk
 *.aab
 *.ap_
 *.dex
@@ -41,3 +42,7 @@ __pycache__/
 
 # apk incremental-install signature (regenerated on build)
 *.idsig
+
+# emulator artifacts
+tools/emulator-bootstrap.log
+tools/emulator-run.log

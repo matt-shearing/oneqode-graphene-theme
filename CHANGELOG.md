@@ -2,6 +2,30 @@
 
 All notable changes to the OneQode GrapheneOS / Android theme suite.
 
+## [1.1.0] — 2026-06-21
+
+### Added
+- **OneQode Theme companion app** (`com.oneqode.theme`, `dist/oneqode-theme-release.apk`)
+  — the native, no-launcher way to get automatic day/night:
+  - Switches the Material You **accent** (cyan ↔ pink, via `WRITE_SECURE_SETTINGS`,
+    granted once over ADB — no root) **and the wallpaper** (Light Glass ↔ Night Ride).
+  - **Solar** (lat/long) or **fixed-time** schedule, reschedules on boot, plus a
+    Quick Settings tile and manual Apply Day/Night buttons.
+  - Pairs with GrapheneOS's built-in Dark-theme schedule for a fully synced look.
+- **Emulator test harness** (`tools/bootstrap-emulator.sh`) and on-device
+  verification screenshots in `docs/`.
+
+### Verified
+- Day/night switching tested end-to-end on **Android 16 (API 36)**: accent
+  live-retints the system UI (pink ↔ cyan), wallpaper swaps, solar/fixed schedule
+  fires (RTC_WAKEUP alarm). Both APKs install and the icon pack is recognised by
+  the Nova/Lawnchair theme intents.
+
+### Changed
+- README reframed around the **native path** (companion app + wallpapers + accent);
+  the Lawnchair icon pack is now documented as optional (only for custom *colored*
+  icons), since the stock launcher already does themed monochrome icons.
+
 ## [1.0.0] — 2026-06-21
 
 Initial release. Targets the Google Pixel 10 Pro Fold ("rango") on GrapheneOS,
