@@ -1,0 +1,57 @@
+plugins {
+    id 'com.android.application'
+}
+
+// Optional release signing: create iconpack/keystore.properties with
+//   storeFile=keystore/oneqode-release.jks
+//   storePassword=...
+//   keyAlias=oneqode
+//   keyPassword=...
+def ksProps = new Properties()
+def ksFile = rootProject.file("keystore.properties")
+if (ksFile.exists()) { ksProps.load(new FileInputStream(ksFile)) }
+
+android {
+    namespace 'com.oneqode.iconpack'
+    compileSdk 36
+
+    defaultConfig {
+        applicationId 'com.oneqode.iconpack'
+        minSdk 26
+        targetSdk 36
+        versionCode 1
+        versionName '1.0.0'
+    }
+
+    if (ksFile.exists()) {
+        signingConfigs {
+            release {
+                storeFile file(ksProps['storeFile'])
+                storePassword ksProps['storePassword']
+                keyAlias ksProps['keyAlias']
+                keyPassword ksProps['keyPassword']
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            if (ksFile.exists()) { signingConfig signingConfigs.release }
+        }
+    }
+
+    // The source tree is shared with build-cli.sh.
+    sourceSets {
+        main {
+            manifest.srcFile 'src/main/AndroidManifest.xml'
+            java.srcDirs = ['src/main/java']
+            res.srcDirs = ['src/main/res']
+        }
+    }
+
+    lint {
+        // generated icons + intentionally code-light dashboard
+        abortOnError false
+    }
+}

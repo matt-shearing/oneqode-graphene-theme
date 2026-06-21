@@ -1,0 +1,6 @@
+// Top-level build file. Android Studio / Gradle path.
+// The self-contained, no-Gradle build used to produce the released APK lives in
+// build-cli.sh (aapt2 + javac + d8 + apksigner). Either produces the same pack.
+plugins {
+    id 'com.android.application' version '8.7.0' apply false
+}

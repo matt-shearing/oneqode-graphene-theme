@@ -1,0 +1,48 @@
+name: Build OneQode icon pack
+
+on:
+  push:
+    branches: [ master, main ]
+    paths:
+      - 'iconpack/**'
+      - 'tools/bootstrap-sdk.sh'
+      - '.github/workflows/build.yml'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install build-tools + platform
+        run: |
+          sdkmanager "platform-tools" "build-tools;35.0.0" "platforms;android-36"
+
+      - name: Regenerate icons + appfilter
+        run: |
+          python3 -m pip install --quiet Pillow
+          sudo apt-get update -qq && sudo apt-get install -y -qq librsvg2-bin
+          python3 iconpack/tools/forge.py
+          python3 iconpack/tools/appfilter.py
+
+      - name: Build & sign APK
+        env:
+          ANDROID_SDK_ROOT: ${{ env.ANDROID_HOME }}
+          KS_PASS: ${{ secrets.KEYSTORE_PASSWORD || 'oneqode' }}
+        run: bash iconpack/build-cli.sh
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: oneqode-iconpack
+          path: dist/oneqode-iconpack-release.apk

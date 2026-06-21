@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.oneqode.iconpack">
+
+    <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="36" />
+
+    <application
+        android:allowBackup="false"
+        android:label="@string/app_name"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:theme="@android:style/Theme.DeviceDefault.DayNight">
+
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:exported="true">
+
+            <!-- Normal launcher entry -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!-- Marks this APK as an icon pack / theme for the major launchers -->
+            <intent-filter>
+                <action android:name="org.adw.launcher.THEMES" />
+                <action android:name="org.adw.ActivityStarter.THEMES" />
+                <action android:name="com.novalauncher.THEME" />
+                <action android:name="com.anddoes.launcher.THEME" />
+                <action android:name="com.gau.go.launcherex.theme" />
+                <action android:name="com.teslacoilsw.launcher.THEME" />
+                <action android:name="ch.deletescape.lawnchair.ICONPACK" />
+                <action android:name="app.lawnchair.icons.THEMED_ICON" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- Lawnchair: this pack ships themed (monochrome) icons -->
+        <meta-data
+            android:name="app.lawnchair.themedIcons"
+            android:resource="@xml/grayscale_icon_map" />
+        <meta-data
+            android:name="org.icontheme.CHANGES_WITH_MATERIAL_YOU_COLORS"
+            android:value="true" />
+
+    </application>
+</manifest>

@@ -1,0 +1,43 @@
+# Android / build
+*.apk
+!dist/oneqode-iconpack-release.apk
+*.aab
+*.ap_
+*.dex
+*.class
+bin/
+gen/
+out/
+build/
+.gradle/
+local.properties
+iconpack/app/build/
+iconpack/build/
+
+# Keystores / secrets — NEVER commit signing keys
+*.jks
+*.keystore
+keystore.properties
+release-key.*
+
+# SDK bootstrap artifacts
+tools/sdk-bootstrap.log
+.android-sdk-oneqode/
+
+# Wallpaper intermediates (the final PNGs ARE committed; raw renders are not)
+wallpapers/src/_work/
+
+# OS / editor
+.DS_Store
+*.swp
+*~
+.idea/
+*.iml
+.vscode/
+
+# python bytecode
+__pycache__/
+*.pyc
+
+# apk incremental-install signature (regenerated on build)
+*.idsig
