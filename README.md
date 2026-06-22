@@ -8,8 +8,8 @@ Same design language, two variants:
 - **OneQode Night Ride** — dark synthwave, neon pink (`#ff0080`) + cyan (`#00c8ff`) for night.
 
 [![Latest release](https://img.shields.io/github/v/release/matt-shearing/oneqode-graphene-theme?label=release&color=00b4c8)](https://github.com/matt-shearing/oneqode-graphene-theme/releases/latest)
-[![Install with Obtainium](https://img.shields.io/badge/Install_with-Obtainium-ff0080?logo=android&logoColor=white)](https://apps.obtainium.imranr.dev/redirect.html?r=obtainium://add/https://github.com/matt-shearing/oneqode-graphene-theme)
-[![Download APK](https://img.shields.io/badge/Download-APK-00c8ff?logo=android&logoColor=white)](https://github.com/matt-shearing/oneqode-graphene-theme/releases/latest/download/oneqode-iconpack-release.apk)
+[![Install with Obtainium](https://img.shields.io/badge/Install_with-Obtainium-ff0080?logo=android&logoColor=white)](https://apps.obtainium.imranr.dev/redirect.html?r=obtainium://app/%7B%22id%22%3A%20%22com.oneqode.theme%22%2C%20%22url%22%3A%20%22https%3A//github.com/matt-shearing/oneqode-graphene-theme%22%2C%20%22author%22%3A%20%22matt-shearing%22%2C%20%22name%22%3A%20%22OneQode%20Theme%22%2C%20%22additionalSettings%22%3A%20%22%7B%5C%22apkFilterRegEx%5C%22%3A%20%5C%22theme%5C%22%2C%20%5C%22invertAPKFilter%5C%22%3A%20false%7D%22%2C%20%22overrideSource%22%3A%20%22GitHub%22%7D)
+[![Download APK](https://img.shields.io/badge/Download-Theme_APK-00c8ff?logo=android&logoColor=white)](https://github.com/matt-shearing/oneqode-graphene-theme/releases/latest/download/oneqode-theme-release.apk)
 
 > **Install in one tap:** on the phone, tap **Install with Obtainium** above (needs the
 > [Obtainium](https://obtainium.imranr.dev) app). Full steps in [Install](#install).
@@ -71,12 +71,14 @@ switches accent + wallpaper automatically on a solar schedule.
 
 ### 1 · Install the OneQode Theme app
 
-[![Install with Obtainium](https://img.shields.io/badge/Install_with-Obtainium-ff0080?logo=android&logoColor=white)](https://apps.obtainium.imranr.dev/redirect.html?r=obtainium://add/https://github.com/matt-shearing/oneqode-graphene-theme)
+[![Install with Obtainium](https://img.shields.io/badge/Install_with-Obtainium-ff0080?logo=android&logoColor=white)](https://apps.obtainium.imranr.dev/redirect.html?r=obtainium://app/%7B%22id%22%3A%20%22com.oneqode.theme%22%2C%20%22url%22%3A%20%22https%3A//github.com/matt-shearing/oneqode-graphene-theme%22%2C%20%22author%22%3A%20%22matt-shearing%22%2C%20%22name%22%3A%20%22OneQode%20Theme%22%2C%20%22additionalSettings%22%3A%20%22%7B%5C%22apkFilterRegEx%5C%22%3A%20%5C%22theme%5C%22%2C%20%5C%22invertAPKFilter%5C%22%3A%20false%7D%22%2C%20%22overrideSource%22%3A%20%22GitHub%22%7D)
 
 - **Obtainium (auto-updates):** install [Obtainium](https://obtainium.imranr.dev),
-  tap the badge above (or **Add App** → paste the repo URL
-  `https://github.com/matt-shearing/oneqode-graphene-theme`). It lists both OneQode
-  APKs — pick **oneqode-theme**.
+  then tap the badge above — it pre-configures the app **and** sets the APK filter
+  to `theme` so the right APK is picked.
+  - Adding the repo URL by hand instead? This release contains two APKs (theme +
+    icon pack), so set **Filter APKs by Regular Expression** to `theme` in the
+    app's options, or Obtainium may grab the wrong one (see Troubleshooting).
 - **Or direct:** [oneqode-theme-release.apk](https://github.com/matt-shearing/oneqode-graphene-theme/releases/latest/download/oneqode-theme-release.apk)
   · **or ADB:** `adb install dist/oneqode-theme-release.apk`
 
@@ -115,8 +117,8 @@ a monochrome system-tinted icon look on the **stock launcher** — no launcher s
 Install the icon pack **only** if you specifically want the bespoke *colored*
 OneQode glyph icons, which require a launcher that supports icon packs.
 
-- Install: Obtainium → pick **oneqode-iconpack**, or
-  [direct APK](https://github.com/matt-shearing/oneqode-graphene-theme/releases/latest/download/oneqode-iconpack-release.apk),
+- Install: [**one-tap Obtainium link** (pre-sets filter to `iconpack`)](https://apps.obtainium.imranr.dev/redirect.html?r=obtainium://app/%7B%22id%22%3A%20%22com.oneqode.iconpack%22%2C%20%22url%22%3A%20%22https%3A//github.com/matt-shearing/oneqode-graphene-theme%22%2C%20%22author%22%3A%20%22matt-shearing%22%2C%20%22name%22%3A%20%22OneQode%20Icon%20Pack%22%2C%20%22additionalSettings%22%3A%20%22%7B%5C%22apkFilterRegEx%5C%22%3A%20%5C%22iconpack%5C%22%2C%20%5C%22invertAPKFilter%5C%22%3A%20false%7D%22%2C%20%22overrideSource%22%3A%20%22GitHub%22%7D),
+  or [direct APK](https://github.com/matt-shearing/oneqode-graphene-theme/releases/latest/download/oneqode-iconpack-release.apk),
   or `adb install dist/oneqode-iconpack-release.apk`.
 
 ### Apply it in Lawnchair
@@ -218,6 +220,17 @@ oneqode-graphene-theme/
 ├── docs/                   previews + grapheneos-notes.md
 └── dist/                   built, signed APK
 ```
+
+## Troubleshooting
+
+**Obtainium: "Downloaded package ID does not match existing app ID –
+com.oneqode.theme".** This release ships two APKs with different package IDs
+(`com.oneqode.theme` + `com.oneqode.iconpack`), and Obtainium tracks one package
+per app, so it can grab the wrong APK. Fix: open the app in Obtainium → set
+**Filter APKs by Regular Expression** to `theme` (or `iconpack` for the other) →
+save. The one-tap badge links above already set this; use them, or re-add via the
+badge. Quickest unblock: install the
+[direct APK](https://github.com/matt-shearing/oneqode-graphene-theme/releases/latest/download/oneqode-theme-release.apk).
 
 ## Design reference
 
